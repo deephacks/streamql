@@ -7,27 +7,40 @@ Predicate and ordering for java.util.stream.Stream using a minimal query languag
 
 ```java
 List<Integer> integers = Arrays.asList(1, 2, 3, 4, 5);
-Collections.shuffle(integers);
 // [1, 5]
-Query.collect("filter == 1 || == 5 ordered", Integer.class, integers.stream());
+Query.collect("filter == 1 || == 5", Integer.class, integers.stream());
+// [1, 2, 3]
+Query.collect("filter != 4 && != 5", Integer.class, integers.stream());
 ```
 
 ```java
 List<String> strings = Arrays.asList("a", "b", "c", "d", "e");
-Collections.shuffle(strings);
-// [d, c]
-Query.collect("filter > 'b' && < 'e' reversed", String.class, strings.stream());
+// [b, c, d]
+Query.collect("filter >= 'b' && < 'e'", String.class, strings.stream());
 // [b, d]
-Query.collect("filter (> 'a' && < 'b') || (> 'd' && < 'e') reversed", String.class, strings.stream());
+Query.collect("filter (> 'a' && < 'c') || (> 'c' && < 'e')", String.class, strings.stream());
 ```
+
+### Ordering
+
+```java
+List<Integer> integers = Arrays.asList(1, 2, 3, 4, 5);
+Collections.shuffle(integers);
+// [1, 2, 3]
+Query.collect("filter <= 3 ordered", Integer.class, integers.stream());
+// [e, d, c, b, a]
+List<String> strings = Arrays.asList("a", "b", "c", "d", "e");
+Query.collect("reversed", String.class, strings.stream());
+```
+
 
 ### Limit and skip
 
 ```java
 List<Integer> integers = Arrays.asList(1, 2, 3, 4, 5);
 Collections.shuffle(integers);
-// [5]
-Query.collect("filter > 3 limit 2 skip 1 ordered", Integer.class, integers.stream());
+// [4, 5]
+Query.collect("filter > 2 limit 2 skip 1 ordered", Integer.class, integers.stream());
 // [5]
 Query.collect("limit 1 reversed", Integer.class, integers.stream());
 ```
