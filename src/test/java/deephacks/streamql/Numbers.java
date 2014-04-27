@@ -272,5 +272,20 @@ public class Numbers {
         throw new IllegalArgumentException(cls.getName());
       }
     }
+
+    @Override
+    public String toString() {
+      return "Digit{" +
+              "aByte=" + aByte +
+              ", aShort=" + aShort +
+              ", aInt=" + aInt +
+              ", aLong=" + aLong +
+              ", aFloat=" + aFloat +
+              ", aDouble=" + aDouble +
+              ", bigInteger=" + bigInteger +
+              ", bigDecimal=" + bigDecimal +
+              ", cls=" + cls +
+              '}';
+    }
   }
 }

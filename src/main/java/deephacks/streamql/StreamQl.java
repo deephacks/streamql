@@ -85,7 +85,7 @@ class StreamQl<T> extends deephacks.streamql.StreamQlBaseVisitor<QueryBuilder<T>
     public QueryBuilder<T> visitOr(@NotNull OrContext ctx) {
       ctx.and().forEach(this::visit);
       if (ctx.and().size() > 1) {
-        queryBuilder = queryBuilder.or();
+        queryBuilder = queryBuilder.or(ctx.and().size());
       }
       return queryBuilder;
     }
@@ -94,7 +94,7 @@ class StreamQl<T> extends deephacks.streamql.StreamQlBaseVisitor<QueryBuilder<T>
     public QueryBuilder<T> visitAnd(@NotNull AndContext ctx) {
       ctx.not().forEach(this::visit);
       if (ctx.not().size() > 1) {
-        queryBuilder = queryBuilder.and();
+        queryBuilder = queryBuilder.and(ctx.not().size());
       }
       return queryBuilder;
     }

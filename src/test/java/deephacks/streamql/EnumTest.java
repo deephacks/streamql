@@ -54,7 +54,7 @@ public class EnumTest {
 
   @Test
   public void test_lesserThan() {
-    List<Type> result = execute("filter enum != null && enum < 'SECONDS' ordered enum");
+    List<Type> result = execute("filter enum < 'SECONDS' && enum != null ordered enum");
     assertThat(result.size(), is(3));
     assertThat(result.get(0).getEnum(), is(TimeUnit.NANOSECONDS));
     assertThat(result.get(1).getEnum(), is(TimeUnit.MICROSECONDS));
@@ -63,7 +63,7 @@ public class EnumTest {
 
   @Test
   public void test_lesser_equal() {
-    List<Type> result = execute("filter enum != null && enum <= 'MINUTES' ordered enum");
+    List<Type> result = execute("filter enum <= 'MINUTES' && enum != null ordered enum");
     assertThat(result.size(), is(5));
     assertThat(result.get(0).getEnum(), is(TimeUnit.NANOSECONDS));
     assertThat(result.get(1).getEnum(), is(TimeUnit.MICROSECONDS));
@@ -75,7 +75,7 @@ public class EnumTest {
 
   @Test
   public void test_biggerThan() {
-    List<Type> result = execute("filter enum != null && enum > 'SECONDS' reversed enum");
+    List<Type> result = execute("filter enum > 'SECONDS' && enum != null reversed enum");
     assertThat(result.size(), is(3));
     assertThat(result.get(0).getEnum(), is(TimeUnit.DAYS));
     assertThat(result.get(1).getEnum(), is(TimeUnit.HOURS));
@@ -84,7 +84,7 @@ public class EnumTest {
 
   @Test
   public void test_bigger_equal() {
-    List<Type> result = execute("filter enum != null && enum >= 'SECONDS' ordered enum");
+    List<Type> result = execute("filter enum >= 'SECONDS' && enum != null ordered enum");
     assertThat(result.size(), is(4));
     assertThat(result.get(0).getEnum(), is(TimeUnit.SECONDS));
     assertThat(result.get(1).getEnum(), is(TimeUnit.MINUTES));

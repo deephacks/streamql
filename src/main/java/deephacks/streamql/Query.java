@@ -8,6 +8,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Optional;
@@ -29,11 +30,8 @@ public class Query<T> {
   private Query(QueryBuilder<T> builder) {
     this.type = builder.type;
     this.comparator = builder.comparator;
-    if (builder.predicates.size() > 1) {
-      throw new IllegalArgumentException("Should never be more than one predicate");
-    }
     if (builder.predicates.size() == 1) {
-      this.predicate = Optional.of(builder.predicates.get(0));
+      this.predicate = Optional.of(builder.predicates.pollLast());
     } else {
       this.predicate = Optional.empty();
     }
@@ -99,7 +97,7 @@ public class Query<T> {
 
   static class QueryBuilder<T> {
     private Class<T> type;
-    private List<Predicate<T>> predicates = new ArrayList<>();
+    private LinkedList<Predicate<T>> predicates = new LinkedList<>();
     private Optional<Comparator<Object>> comparator = Optional.empty();
     private Optional<Long> skip = Optional.empty();
     private Optional<Long> limit = Optional.empty();
@@ -139,30 +137,20 @@ public class Query<T> {
       return this;
     }
 
-    public QueryBuilder<T> or() {
-      if (predicates.size() < 2) {
-        return this;
+    public QueryBuilder<T> or(int num) {
+      Predicate<T> predicate = predicates.pollLast();
+      for (int i = 1; i < num; i++) {
+        predicate = predicate.or(predicates.pollLast());
       }
-      ListIterator<Predicate<T>> it = predicates.listIterator();
-      Predicate<T> predicate = it.next();
-      while (it.hasNext()) {
-        predicate = predicate.or(it.next());
-      }
-      predicates.clear();
       predicates.add(predicate);
       return this;
     }
 
-    public QueryBuilder<T> and() {
-      if (predicates.size() < 2) {
-        return this;
+    public QueryBuilder<T> and(int num) {
+      Predicate<T> predicate = predicates.pollLast();
+      for (int i = 1; i < num; i++) {
+        predicate = predicate.and(predicates.pollLast());
       }
-      ListIterator<Predicate<T>> it = predicates.listIterator();
-      Predicate<T> predicate = it.next();
-      while (it.hasNext()) {
-        predicate = predicate.and(it.next());
-      }
-      predicates.clear();
       predicates.add(predicate);
       return this;
     }

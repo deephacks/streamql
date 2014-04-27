@@ -40,7 +40,7 @@ public class ZoneOffsetTest {
 
   @Test
   public void test_not_equals() {
-    List<Type> result = execute("filter zoneOffset != null && zoneOffset != '+2' ordered zoneOffset");
+    List<Type> result = execute("filter zoneOffset != '+2' && zoneOffset != null ordered zoneOffset");
     assertThat(result.size(), is(4));
     assertThat(result.get(0).getZoneOffset(), is(t5));
     assertThat(result.get(1).getZoneOffset(), is(t3));
@@ -51,7 +51,7 @@ public class ZoneOffsetTest {
 
   @Test
   public void test_lesserThan() {
-    List<Type> result = execute("filter zoneOffset != null && zoneOffset < '-1' ordered zoneOffset");
+    List<Type> result = execute("filter zoneOffset < '-1' && zoneOffset != null ordered zoneOffset");
     assertThat(result.size(), is(4));
     assertThat(result.get(0).getZoneOffset(), is(t5));
     assertThat(result.get(1).getZoneOffset(), is(t4));
@@ -61,7 +61,7 @@ public class ZoneOffsetTest {
 
   @Test
   public void test_lesser_equal() {
-    List<Type> result = execute("filter zoneOffset != null && zoneOffset <= '+0' ordered zoneOffset");
+    List<Type> result = execute("filter zoneOffset <= '+0' && zoneOffset != null ordered zoneOffset");
     System.out.println(result.get(0).getZoneOffset());
     assertThat(result.size(), is(4));
     assertThat(result.get(0).getZoneOffset(), is(t5));
@@ -72,7 +72,7 @@ public class ZoneOffsetTest {
 
   @Test
   public void test_biggerThan() {
-    List<Type> result = execute("filter zoneOffset != null && zoneOffset > '+1' ordered zoneOffset");
+    List<Type> result = execute("filter zoneOffset > '+1' && zoneOffset != null ordered zoneOffset");
     assertThat(result.size(), is(2));
     assertThat(result.get(0).getZoneOffset(), is(t2));
     assertThat(result.get(1).getZoneOffset(), is(t1));
@@ -81,7 +81,7 @@ public class ZoneOffsetTest {
 
   @Test
   public void test_bigger_equal() {
-    List<Type> result = execute("filter zoneOffset != null && zoneOffset >= '+1' ordered zoneOffset");
+    List<Type> result = execute("filter zoneOffset >= '+1' && zoneOffset != null ordered zoneOffset");
     assertThat(result.size(), is(3));
     assertThat(result.get(0).getZoneOffset(), is(t3));
     assertThat(result.get(1).getZoneOffset(), is(t2));

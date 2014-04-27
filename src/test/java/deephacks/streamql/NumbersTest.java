@@ -4,6 +4,8 @@ import deephacks.streamql.Numbers.Digit;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -29,6 +31,7 @@ public class NumbersTest {
       }
     });
   }
+
   @Test
   public void test_filter_not_equal() {
     numbers.verify("filter d != 3 && d != 1 && d != 4", result -> {
@@ -150,5 +153,14 @@ public class NumbersTest {
       assertTrue(result.get(1).eq(9));
       assertTrue(result.get(2).eq(8));
     });
+  }
+
+  @Test
+  public void test_disjunct() throws IOException {
+    List<Integer> result = Query.collect("filter ( > 1 && < 3) || ( > 3 && < 5 ) ordered", Integer.class,
+            Arrays.asList(1, 2, 3, 4, 5).stream());
+    assertThat(result.size(), is(2));
+    assertThat(result.get(0), is(2));
+    assertThat(result.get(1), is(4));
   }
 }
