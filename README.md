@@ -89,8 +89,8 @@ list.add(new Person("Emma", "Moore", 21));
 ```
 
 ```java
-// [James Moore 25, James Smith 40]
-Query.collect("filter fname == 'James' ordered sname", Person.class, list.stream());
+// [James Moore 25, John Moore 21, James Smith 40]
+Query.collect("filter fname startsWith 'J' ordered sname", Person.class, list.stream());
 // [Thomas Smith 45, Olivia Smith 41]
 Query.collect("filter sname == 'Smith' && age > 40 reversed age", Person.class, list.stream())
 // [John Andersson 25]
