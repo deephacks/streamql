@@ -25,14 +25,14 @@ Query.collect("filter (> 'a' && < 'c') || (> 'c' && < 'e')", String.class, strin
 
 ```java
 List<String> strings = Arrays.asList("abc", "bca", "cab");
-// starts with 'a' = [abc]
-Query.collect("filter ^ 'a'", String.class, strings.stream());
-// ends with 'a' = [bca]
-Query.collect("filter $ 'a'", String.class, strings.stream());
-// contains 'a' = [abc, bca, cab]
-Query.collect("filter ~ 'a'", String.class, strings.stream());
-// regexp 'a in middle' = [cab]
-Query.collect("filter * '^.a.$'", String.class, strings.stream());
+// [abc]
+Query.collect("filter startsWith 'a'", String.class, strings.stream());
+// [bca]
+Query.collect("filter endsWith 'a'", String.class, strings.stream());
+// [abc, bca, cab]
+Query.collect("filter contains 'a'", String.class, strings.stream());
+// [cab]
+Query.collect("filter regExp '^.a.$'", String.class, strings.stream());
 ```
 
 ### Ordering
