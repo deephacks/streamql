@@ -127,7 +127,7 @@ public class PersonTest {
 
   @Test
   public void test_filter_contains() {
-    List<Person> result = execute("filter sname ~ 'B' && fname ~ 'A'");
+    List<Person> result = execute("filter sname contains 'B' && fname contains 'A'");
     assertFalse(result.isEmpty());
     for (Person p : result) {
       if (!p.getSname().equals("B") && !p.getFname().equals("A")) {
@@ -145,7 +145,7 @@ public class PersonTest {
 
   @Test
   public void test_filter_startWith() {
-    List<Person> result = execute("filter sname ^ 'A'");
+    List<Person> result = execute("filter sname startsWith 'A'");
     assertFalse(result.isEmpty());
     for (Person p : result) {
       if (!p.getSname().startsWith("A")) {
@@ -156,7 +156,7 @@ public class PersonTest {
 
   @Test
   public void test_filter_endsWith() {
-    List<Person> result = execute("filter sname $ 'A'");
+    List<Person> result = execute("filter sname endsWith 'A'");
     assertFalse(result.isEmpty());
     for (Person p : result) {
       if (!p.getSname().endsWith("A")) {
@@ -167,7 +167,7 @@ public class PersonTest {
 
   @Test
   public void test_filter_regexp() {
-    List<Person> result = execute("filter fname * '^A$' && age > 8");
+    List<Person> result = execute("filter fname regExp '^A$' && age > 8");
     for (Person p : result) {
       if (p.getFname().charAt(0) != 'A' || p.getAge() < 9) {
         throw new IllegalStateException(p.toString());

@@ -39,9 +39,15 @@ public class Query<T> {
     this.limit = builder.limit;
   }
 
-  private static <T> Query<T> parse(String query, Class<T> cls) throws IllegalQueryException {
+  public static <T> Query<T> parse(String query, Class<T> cls) throws IllegalQueryException {
     ParseTree tree = getParseTree(query);
     QueryBuilder<T> builder = new StreamQl<>(QueryBuilder.builder(cls)).visit(tree);
+    return builder.build();
+  }
+
+  public static Query<Object> parse(String query) throws IllegalQueryException {
+    ParseTree tree = getParseTree(query);
+    QueryBuilder<Object> builder = new StreamQl<>(QueryBuilder.builder(Object.class)).visit(tree);
     return builder.build();
   }
 
@@ -78,21 +84,25 @@ public class Query<T> {
     return null;
   }
 
-  public static <T> List<T> collect(String query, Class<T> cls, Stream<T> stream) throws IllegalQueryException {
-    Query<T> q = parse(query, cls);
-    if (q.getPredicate().isPresent()) {
-      stream = stream.filter(q.getPredicate().get());
+  public List<T> collect(Stream<T> stream) throws IllegalQueryException {
+    if (getPredicate().isPresent()) {
+      stream = stream.filter(getPredicate().get());
     }
-    if (q.comparator.isPresent()) {
-      stream = stream.sorted(q.comparator.get());
+    if (comparator.isPresent()) {
+      stream = stream.sorted(comparator.get());
     }
-    if (q.getSkip().isPresent()) {
-      stream = stream.skip(q.getSkip().get());
+    if (getSkip().isPresent()) {
+      stream = stream.skip(getSkip().get());
     }
-    if (q.getLimit().isPresent()) {
-      stream = stream.limit(q.getLimit().get());
+    if (getLimit().isPresent()) {
+      stream = stream.limit(getLimit().get());
     }
     return stream.collect(Collectors.toList());
+  }
+
+  public static <T> List<T> collect(String query, Class<T> cls, Stream<T> stream) throws IllegalQueryException {
+    Query<T> q = parse(query, cls);
+    return q.collect(stream);
   }
 
   static class QueryBuilder<T> {

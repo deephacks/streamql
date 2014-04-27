@@ -94,7 +94,7 @@ public class StringTest {
 
   @Test
   public void test_filter_like() {
-    List<String> result = execute("filter ~ 'aa'");
+    List<String> result = execute("filter contains 'aa'");
     for (String p : result) {
       if (!p.contains("aa")) {
         throw new IllegalStateException(p);
@@ -104,7 +104,7 @@ public class StringTest {
 
   @Test
   public void test_filter_startsWith() {
-    List<String> result = execute("filter ^ 'a'");
+    List<String> result = execute("filter startsWith 'a'");
     for (String p : result) {
       if (!p.startsWith("a")) {
         throw new IllegalStateException(p);
@@ -114,7 +114,7 @@ public class StringTest {
 
   @Test
   public void test_filter_endsWith() {
-    List<String> result = execute("filter $ 'b'");
+    List<String> result = execute("filter endsWith 'b'");
     for (String p : result) {
       if (!p.endsWith("b")) {
         throw new IllegalStateException(p);
@@ -124,7 +124,7 @@ public class StringTest {
 
   @Test
   public void test_filter_start_and_endsWith() {
-    List<String> result = execute("filter ^ 'a' && $ 'b'");
+    List<String> result = execute("filter startsWith 'a' && endsWith 'b'");
     for (String p : result) {
       if (!p.startsWith("a") && !p.endsWith("b")) {
         throw new IllegalStateException(p);
@@ -134,7 +134,7 @@ public class StringTest {
 
   @Test
   public void test_filter_regexp() {
-    List<String> result = execute("filter * '^.a.$'");
+    List<String> result = execute("filter regExp '^.a.$'");
     for (String p : result) {
       if (p.charAt(1) != 'a') {
         throw new IllegalStateException(p);

@@ -53,11 +53,6 @@ NULL:  'null';
 TRUE:  'true';
 FALSE:  'false';
 
-operator : EQ | NT_EQ | LT | LT_EQ | GT | GT_EQ | CONTAINS | STARTS_WITH | ENDS_WITH | REGEXP;
-
-ID : [a-zA-Z0-9\.\_]+ ;
-
-
 AND : '&&';
 OR  : '||';
 NOT : '!';
@@ -67,10 +62,15 @@ LT_EQ : '<=';
 GT_EQ : '>=';
 GT : '>';
 LT : '<';
-CONTAINS : '~';
-STARTS_WITH: '^';
-ENDS_WITH: '$';
-REGEXP: '*';
+CONTAINS : 'contains';
+STARTS_WITH: 'startsWith';
+ENDS_WITH: 'endsWith';
+REGEXP: 'regExp';
+
+operator : EQ | NT_EQ | LT | LT_EQ | GT | GT_EQ | CONTAINS | STARTS_WITH | ENDS_WITH | REGEXP;
+
+ID : [a-zA-Z0-9\.\_\$]+;
+
 
 // skip whitespace globally everywhere
 WS : [ \t\r\n]+ -> skip ;
