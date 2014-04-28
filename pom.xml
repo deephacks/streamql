@@ -87,12 +87,13 @@
           </execution>
         </executions>
       </plugin>
+      <!--
       <plugin>
         <groupId>org.antlr</groupId>
         <artifactId>antlr4-maven-plugin</artifactId>
         <version>4.2.2</version>
         <configuration>
-          <!-- grammar have been put here in order harmonize IDE and Maven source generation -->
+           grammar have been put here in order harmonize IDE and Maven source generation
           <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
           <listener>false</listener>
           <visitor>true</visitor>
@@ -106,6 +107,7 @@
           </execution>
         </executions>
       </plugin>
+      -->
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
         <groupId>org.apache.maven.plugins</groupId>
@@ -144,8 +146,7 @@
         <version>2.9</version>
         <configuration>
           <!-- horrendous hack to avoid a bug in jdk 8 when generating javadoc -->
-          <javadocExecutable>/usr/lib/jvm/jdk1.7.0_21/bin/javadoc</javadocExecutable>
-          <failOnError>false</failOnError>
+          <additionalparam>-Xdoclint:none</additionalparam>
         </configuration>
         <executions>
           <execution>
