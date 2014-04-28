@@ -5,7 +5,7 @@
   <artifactId>streamql</artifactId>
   <name>streamql</name>
   <packaging>jar</packaging>
-  <version>0.5.8-SNAPSHOT</version>
+  <version>0.5.8</version>
   <description>Predicate and ordering for java.util.stream.Stream using a minimal query language.</description>
   <url>http://streamql.deephacks.org</url>
   <inceptionYear>2014</inceptionYear>
