@@ -1,5 +1,6 @@
 streamql
 ========
+[![Build Status](https://travis-ci.org/deephacks/streamql.png?branch=master)](https://travis-ci.org/deephacks/streamql)
 
 Predicate and ordering for java.util.stream.Stream using a minimal query language.
 
