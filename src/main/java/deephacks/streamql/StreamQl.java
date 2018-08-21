@@ -69,13 +69,13 @@ class StreamQl<T> extends deephacks.streamql.StreamQlBaseVisitor<QueryBuilder<T>
         if (ctx.ordered().ID() == null || ctx.ordered().ID().isEmpty()) {
           return queryBuilder.setOrdered();
         }
-        List<String> ids = ctx.ordered().ID().stream().map(TerminalNode::getText).collect(Collectors.toList());
+        List<String> ids = ctx.ordered().ID().parallelStream().map(TerminalNode::getText).collect(Collectors.toList());
         return queryBuilder.setOrdered(ids);
       } else if (ctx.reversed() != null) {
         if (ctx.reversed().ID() == null || ctx.reversed().ID().isEmpty()) {
           return queryBuilder.setReversed();
         }
-        List<String> ids = ctx.reversed().ID().stream().map(TerminalNode::getText).collect(Collectors.toList());
+        List<String> ids = ctx.reversed().ID().parallelStream().map(TerminalNode::getText).collect(Collectors.toList());
         return queryBuilder.setReversed(ids);
       }
       return queryBuilder;
